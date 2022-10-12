@@ -11,7 +11,6 @@ export class CoursesController {
     findAll() {
         return this.coursesService.findAll();
     }
-
     // @Get(':id')
     // findOne(@Param() params) { //para usa de um ou mais parametros 
     //     return `Curso de numero #${params.id}`;
