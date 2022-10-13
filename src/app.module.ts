@@ -13,7 +13,7 @@ import { CoursesModule } from './courses/courses.module';
     password: 'root',
     database: 'postgres',
     autoLoadEntities: true,
-    synchronize: true,
+    synchronize: true, // segundo doc, nunca usar o synchronize em produção
   })],
   controllers: [AppController],
   providers: [AppService],

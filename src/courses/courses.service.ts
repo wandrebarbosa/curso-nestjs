@@ -23,8 +23,8 @@ export class CoursesService {
         });
     }
 
-    async findOne(id: string){
-        const course = await this.courseRepository.findOne(id, {
+    findOne(id: string){
+        const course = this.courseRepository.findOne(id, {
             relations: ['tags'],
         })
 
@@ -51,11 +51,11 @@ export class CoursesService {
 
 
     async update(id: string, updateCourseDto: UpdateCourseDto) {
-        const tags = updateCourseDto.tags && (
-            await Promise.all(
-                updateCourseDto.tags.map((name) => this.preLoadTagByName(name))
-            )
-        )
+        const tags = 
+            updateCourseDto.tags && 
+                (await Promise.all(
+                    updateCourseDto.tags.map((name) => this.preLoadTagByName(name))
+                ));
 
         const course = await this.courseRepository.preload({
             id: +id, // coverto meu id que por padrao vem como string do frond, para number.
