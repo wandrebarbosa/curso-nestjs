@@ -55,10 +55,10 @@ export class CoursesService {
             updateCourseDto.tags && 
                 (await Promise.all(
                     updateCourseDto.tags.map((name) => this.preLoadTagByName(name))
-                ));
+                )); 
 
         const course = await this.courseRepository.preload({
-            id: +id, // coverto meu id que por padrao vem como string do frond, para number.
+            id: id, // coverto meu id que por padrao vem como string do frond, para number.
             ...updateCourseDto,
             tags,
         });

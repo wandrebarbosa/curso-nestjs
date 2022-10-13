@@ -12,8 +12,9 @@ import { CoursesModule } from './courses/courses.module';
     username: 'postgres',
     password: 'root',
     database: 'postgres',
-    autoLoadEntities: true,
-    synchronize: true, // segundo doc, nunca usar o synchronize em produção
+    entities: [__dirname + '/**/*.entity.ts'],
+    autoLoadEntities: false,
+    synchronize: false, // segundo doc, nunca usar o synchronize em produção
   })],
   controllers: [AppController],
   providers: [AppService],
