@@ -1,7 +1,7 @@
 import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Tag } from "./tag.entity";
 
-import { v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4} from 'uuid' //universal unico identificador para usar
 
 @Entity('courses')
 export class Course {

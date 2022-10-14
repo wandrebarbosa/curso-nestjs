@@ -11,7 +11,7 @@ export class CreateCoursesTagsTable1665691698865 implements MigrationInterface {
                     type: 'uuid',
                     isPrimary: true,
                     generationStrategy: 'uuid',
-                    default: 'uuid_generate_v4()',
+                    default: 'uuid_generate_v4()', //método do proprio postgres, o id vai ter um id gerado pelo proprio postgres.
 
                 },
                 {

@@ -6,7 +6,7 @@ export class AddCoursesIdToCoursesTagsTable1665692507357 implements MigrationInt
         await queryRunner.addColumn('courses_tags', new TableColumn({
             name: 'coursesId',
             type: 'uuid',
-            isNullable: true
+            isNullable: true //inserimos essa propriedade, devido ao fato de se ja exitir registro na tabela que nao tenha esse campo antes, o valore deles será atribuido como null.
         }));
         
 
