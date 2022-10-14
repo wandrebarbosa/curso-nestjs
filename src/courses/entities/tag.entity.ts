@@ -1,7 +1,7 @@
 import { BeforeInsert, Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Course } from "./courses.entity";
 
-import { v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4} from 'uuid';
 @Entity('tags')
 export class Tag {
     @PrimaryGeneratedColumn('uuid')

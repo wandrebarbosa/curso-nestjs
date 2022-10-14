@@ -10,7 +10,7 @@ export class AddTagsIdToCoursesTagsTable1665759347109 implements MigrationInterf
             isNullable: true,
         }));
 
-        await queryRunner.createForeignKey('course_tags',
+        await queryRunner.createForeignKey('courses_tags',
         new TableForeignKey({
             name: 'courses_tags_tags',
             columnNames: ['tagsId'],

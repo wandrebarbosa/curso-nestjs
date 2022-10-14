@@ -1,7 +1,7 @@
 import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Tag } from "./tag.entity";
 
-import { v4 as uuidv4} from 'uuid' //universal unico identificador para usar
+import { v4 as uuidv4} from 'uuid'; //universal unico identificador para usar
 
 @Entity('courses')
 export class Course {
@@ -14,7 +14,7 @@ export class Course {
     @Column()
     description: string;
 
-    @JoinTable()
+    @JoinTable({ name: 'courses_tags'})
     @ManyToMany(() => Tag, (tag) => tag.courses, {
         cascade: true,
     })

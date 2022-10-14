@@ -12,7 +12,7 @@ import { CoursesModule } from './courses/courses.module';
     username: 'postgres',
     password: 'root',
     database: 'postgres',
-    entities: [__dirname + '/**/*.entity.ts'],
+    entities: [__dirname + '/**/*.entity.js'],
     autoLoadEntities: false,
     synchronize: false, // segundo doc, nunca usar o synchronize em produção
   })],
