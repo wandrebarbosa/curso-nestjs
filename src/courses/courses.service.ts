@@ -1,5 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -8,30 +7,28 @@ import { Tag } from './entities/tag.entity';
 
 @Injectable()
 export class CoursesService {
-    constructor( // construtor do meu Repository para usar os métodos do mesmo para operar o bd.
-        @InjectRepository(Course)
-        private readonly courseRepository: Repository<Course>,
 
-        @InjectRepository(Tag)
-        private readonly tagRepository: Repository<Tag>
-    ) {}
+        @Inject('COURSES_REPOSITORY')
+        private readonly courseRepository: Repository<Course>;
+
+        @Inject('TAGS_REPOSITORY')
+        private readonly tagRepository: Repository<Tag>;
 
 
-    findAll() {
+    async findAll() {
         return this.courseRepository.find({
             relations: ['tags'],
         });
     }
 
-    findOne(id: string){
-        const course = this.courseRepository.findOne(id, {
+    async findOne(id: string){
+        const course = await this.courseRepository.findOne({
+            where: { id },
             relations: ['tags'],
         })
 
-        if(!course) {
-            throw new HttpException(
-                `Course ID ${id} not found`,
-                HttpStatus.NOT_FOUND)
+        if (!course) {
+            throw new NotFoundException(`Course ID ${id} not found`);
         }
 
         return course
@@ -58,15 +55,13 @@ export class CoursesService {
                 )); 
 
         const course = await this.courseRepository.preload({
-            id: id, // coverto meu id que por padrao vem como string do frond, para number.
+            id, // coverto meu id que por padrao vem como string do frond, para number.
             ...updateCourseDto,
             tags,
         });
 
-        if(!course) {
-            throw new HttpException(
-                `Course ID ${id} not found!`,
-                HttpStatus.NOT_FOUND)
+        if (!course) {
+            throw new NotFoundException(`Course ID ${id} not found`);
         }
         
         return this.courseRepository.save(course)
@@ -74,13 +69,13 @@ export class CoursesService {
     }
 
     async remove(id: string) {
-        const course = await this.courseRepository.findOne(id)
+        const course = await this.courseRepository.findOne({
+            where: { id },
+        });
 
-        if(!course) {
-            throw new HttpException(
-                `Course ID ${id} not found!`,
-                HttpStatus.NOT_FOUND)
-        }
+        if (!course) {
+            throw new NotFoundException(`Course ID ${id} not found`);
+          }
 
         return this.courseRepository.remove(course);
     }

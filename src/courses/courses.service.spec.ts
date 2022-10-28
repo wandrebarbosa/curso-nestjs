@@ -1,3 +1,4 @@
+import { NotFoundException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Connection, Repository } from "typeorm";
@@ -44,7 +45,16 @@ describe('CourseService', () => {
                 expect(course).toEqual(expectedCourse);
             });
 
-            it('deve retornar um NotFoundException', () => {
+            it('deve retornar um NotFoundException', async () => {
+                const courseId = '1';
+                courseRepository.findOne.mockReturnValue(undefined)
+
+            try{
+                const course = await service.findOne(courseId);
+            } catch (error) {
+                expect(error).toBeInstanceOf(NotFoundException);
+                expect(error.message).toEqual(`Course ID ${courseId} not found`);
+            }
 
             });
         })
